@@ -3,11 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="a484f3fa-3d91-4406-a6c9-a20fec7c323d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MADDPG/maddpg.py" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/maddpg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg0.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg78_0.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg1.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg78_1.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg2.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg78_2.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot.py" beforeDir="false" afterPath="$PROJECT_DIR$/robot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/data/hit_rate_maddpg_all.npy" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/data/hit_rate_maddpg_all.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg0.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg0.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg1.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg1.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/model/maddpg2.pth" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/model/maddpg2.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/Hit Rate_maddpg.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/Hit Rate_maddpg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_motion_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/robot_motion_env.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run_this_maddpg.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_this_maddpg.py" afterDir="false" />
     </list>
@@ -22,10 +34,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_motion_env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4834">
-              <caret line="525" column="35" selection-start-line="525" selection-start-column="35" selection-end-line="525" selection-end-column="35" />
+            <state relative-caret-position="238">
+              <caret line="610" column="35" lean-forward="true" selection-start-line="610" selection-start-column="35" selection-end-line="610" selection-end-column="35" />
               <folding>
-                <element signature="e#161#179#0" expanded="true" />
+                <element signature="e#160#170#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -35,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/MADDPG/maddpg.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
-              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+              <caret line="72" selection-start-line="72" selection-end-line="72" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -46,7 +58,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
+            <state relative-caret-position="3162">
               <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
                 <element signature="e#25#43#0" expanded="true" />
@@ -67,8 +79,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_this_maddpg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="737">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -141,11 +153,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="75" />
-    <option name="y" value="6" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="67" />
+    <option name="y" value="24" />
     <option name="width" value="2493" />
-    <option name="height" value="1444" />
+    <option name="height" value="1416" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -314,21 +326,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="2495" height="1444" extended-state="7" />
-    <editor active="true" />
+    <frame x="67" y="24" width="2493" height="1416" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16100323" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1611336" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32927758" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33706188" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33663365" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.37285608" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3298585" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32977912" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -420,13 +431,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/world.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4590">
-          <caret line="141" column="22" selection-start-line="141" selection-start-column="19" selection-end-line="141" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Python_Workspace/director/build/install/lib/python3.6/site-packages/director/debugVis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1972">
@@ -451,16 +455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="93" selection-start-line="93" selection-end-line="93" />
-          <folding>
-            <element signature="e#25#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MADDPG/replay_buffer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -481,51 +475,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_2.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_2.npy">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3162">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+          <folding>
+            <element signature="e#25#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/world.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4590">
+          <caret line="141" column="22" selection-start-line="141" selection-start-column="19" selection-end-line="141" selection-end-column="30" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MADDPG/maddpg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
-          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_0.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_0.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/data/average_reward_maddpg_2.npy">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Hit Rate_maddpg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_motion_env.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4834">
-          <caret line="525" column="35" selection-start-line="525" selection-start-column="35" selection-end-line="525" selection-end-column="35" />
+        <state relative-caret-position="238">
+          <caret line="610" column="35" lean-forward="true" selection-start-line="610" selection-start-column="35" selection-end-line="610" selection-end-column="35" />
           <folding>
-            <element signature="e#161#179#0" expanded="true" />
+            <element signature="e#160#170#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_1.png">
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_2.png">
@@ -534,10 +524,34 @@
     <entry file="file://$PROJECT_DIR$/MADDPG/pic/Actor Loss_maddpg_0.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Critic Loss_maddpg_0.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_0.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/average_reward_maddpg_2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/data/hit_rate_maddpg_all.npy">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MADDPG/pic/Hit Rate_maddpg.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/run_this_maddpg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="737">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

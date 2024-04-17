@@ -2,7 +2,7 @@
 # alias director=/Users/wankaifang/director/build/install/bin/directorPython
 # cd /Users/wankaifang/build/RL-Robot-Motion-planning/Env
 
-
+import sys
 import numpy as np
 import math
 from world import World
@@ -609,6 +609,7 @@ class RobotMotionEnv(object):
             self.save_data() #保存输出结果
             print('learning process over!')
             self.learn_timer.stop()
+            sys.exit()#结束程序
         #一个回合结束
         elif self._terminal:
             self._episode_iter += 1
@@ -634,7 +635,7 @@ class RobotMotionEnv(object):
                 for i in range(len(self.is_hit_target)):
                     if self.is_hit_target[i] == 1:
                         count += 1
-                count /= 500
+                count /= 200
                 self.hit_rate.append(count)
                 print('hit_rate', count)
         #——————————————————————————————MADDPG————————————————————————————————
