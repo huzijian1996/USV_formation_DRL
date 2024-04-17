@@ -16,7 +16,7 @@ class Robot(object):
         self._max_turnangle_perstep = np.pi / 30  # 智能体每个步长最大的偏转角度6 degree
         self._dt = 0.1
         self.state = np.array([0., 0., 0.])
-        self.a_max = 30
+        self.a_max = 40
         #固定翼飞机A10
         if robot_name == "USV":
             model = "USV1.obj"

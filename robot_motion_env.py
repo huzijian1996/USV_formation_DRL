@@ -51,7 +51,7 @@ class RobotMotionEnv(object):
 
         self._robot_init_velocity = 25
         self._sensor_num_rays = 32
-        self._sensor_radius = 40
+        self._sensor_radius = 100
         self._sensor_detect_scope = [-90, 90]
         self._target_init_state = [-400, -400, 0]
         self._target_init_velocity = 0
@@ -353,13 +353,21 @@ class RobotMotionEnv(object):
         elif self._hit_target:
             return 5
         else:
-            delta_distance = (prev_distance - new_distance)/2.5  # 敌我距离增量
-            angle_distance = -abs(self._angle_to_destination(new_ralative_pos[0],new_ralative_pos[1],i)) / np.pi   # 角度偏移量 <0
+            delta_distance = prev_distance - new_distance  # 敌我距离增量
+            angle_distance = -abs(self._angle_to_destination(new_ralative_pos[0],new_ralative_pos[1],i)) / 4   # 角度偏移量 <0
 
             total = 0
-            for ray in range(self._sensor_num_rays):
-                total += (self.robots[i].sensor.distances[ray] - 1)
-            obstacle_ahead = total / self._sensor_num_rays#插的越深 负值越多
+            ray_k = int(self._sensor_num_rays/5)
+            for ray in range(ray_k):
+                total += (self.robots[i].sensor.distances[2*ray_k + ray] - 1)
+            obstacle_ahead = total / ray_k #插的越深 负值越多
+
+            # obstacle_ahead = self.robots[i].sensor.distances[int(self._sensor_num_rays / 2)] - 1
+
+            # total = 0
+            # for ray in range(self._sensor_num_rays):
+            #     total += (self.robots[i].sensor.distances[ray] - 1)
+            # obstacle_ahead = total / self._sensor_num_rays#插的越深 负值越多
 
             lamda1, lamda2, lamda3 = 0.4, 0.2, 0.4
             return lamda1*delta_distance + lamda2*angle_distance + lamda3*obstacle_ahead
@@ -369,16 +377,24 @@ class RobotMotionEnv(object):
         new_distance = np.sqrt(new_ralative_pos[0] ** 2 + new_ralative_pos[1] ** 2)
         if self._collided:
             return -10
-        elif new_distance <= 10:
-            return 3*new_distance/10
+        elif new_distance <= 5:
+            return 3*(1-new_distance/5)
         else:
-            delta_distance = (prev_distance - new_distance)/2.5  # 敌我距离增量
-            angle_distance = -abs(self._angle_to_destination(new_ralative_pos[0],new_ralative_pos[1],i)) / np.pi  # 角度偏移量 <0
+            delta_distance = prev_distance - new_distance  # 敌我距离增量
+            angle_distance = -abs(self._angle_to_destination(new_ralative_pos[0],new_ralative_pos[1],i)) / 4  # 角度偏移量 <0
 
             total = 0
-            for ray in range(self._sensor_num_rays):
-                total += (self.robots[i].sensor.distances[ray] - 1)
-            obstacle_ahead = total / self._sensor_num_rays  # 插的越深 负值越多
+            ray_k = int(self._sensor_num_rays/5)
+            for ray in range(ray_k):
+                total += (self.robots[i].sensor.distances[2*ray_k + ray] - 1)
+            obstacle_ahead = total / ray_k #插的越深 负值越多
+
+            # obstacle_ahead = self.robots[i].sensor.distances[int(self._sensor_num_rays / 2)] - 1
+
+            # total = 0
+            # for ray in range(self._sensor_num_rays):
+            #     total += (self.robots[i].sensor.distances[ray] - 1)
+            # obstacle_ahead = total / self._sensor_num_rays  # 插的越深 负值越多
 
             lamda1, lamda2, lamda3 = 0.4, 0.2, 0.4
             return lamda1 * delta_distance + lamda2 * angle_distance + lamda3 * obstacle_ahead
