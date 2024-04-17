@@ -25,6 +25,10 @@ class MADDPG(object):
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=self.lr_a)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=self.lr_c)
 
+        #用于画图的两个loss
+        self.a_loss = []
+        self.c_loss = []
+
     # Each agent selects actions based on its own local observations(add noise for exploration)
     def choose_action(self, obs, noise_std):
         obs = torch.unsqueeze(torch.tensor(obs, dtype=torch.float), 0)
@@ -62,6 +66,12 @@ class MADDPG(object):
             torch.nn.utils.clip_grad_norm_(self.actor.parameters(), 10.0)
         self.actor_optimizer.step()
 
+        #画图附加
+        self.a_loss.append(actor_loss.detach().numpy())
+        self.c_loss.append(critic_loss.detach().numpy())
+        # print(actor_loss.detach().numpy(),critic_loss.detach().numpy())
+
+
         # Softly update the target networks
         for param, target_param in zip(self.critic.parameters(), self.critic_target.parameters()):
             target_param.data.copy_(self.tau * param.data + (1 - self.tau) * target_param.data)
@@ -73,7 +83,7 @@ class MADDPG(object):
         torch.save(self.actor, f"./MADDPG/model/maddpg{agent_id}.pth")
 
     def load_model(self, agent_id):
-        return torch.load(f"./MADDPG/model/maddpg{agent_id}.pth")
+        return torch.load(f"./MADDPG/model/maddpg80_{agent_id}.pth")
 
 
     # def save_model(self, env_name, algorithm, number, total_steps, agent_id):

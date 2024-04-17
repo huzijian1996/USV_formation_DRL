@@ -17,6 +17,10 @@ class Robot(object):
         self._dt = 0.1
         self.state = np.array([0., 0., 0.])
         self.a_max = 40
+        self.episode_step_reward = [] #整个回合每一步的奖励
+        self.episode_average_reward = [] #每个回合的平均奖励
+
+
         #固定翼飞机A10
         if robot_name == "USV":
             model = "USV1.obj"
@@ -90,6 +94,7 @@ class Robot(object):
 
     #重置状态
     def reset(self, new_state):
+        self.episode_step_reward = [] #整个回合每一步的奖励
         self.state = self.generate_safe_position(new_state)
         self.sensor.update(*self.state)
      #  self._update_state()

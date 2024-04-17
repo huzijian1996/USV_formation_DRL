@@ -11,8 +11,10 @@ import copy
 np.random.seed(2)
 
 if __name__ == '__main__':
+    env = RobotMotionEnv("UAV-0", False)
+
     parser = argparse.ArgumentParser("Hyperparameters Setting for MADDPG and MATD3 in MPE environment")
-    parser.add_argument("--N", type=int, default=3, help=" number of agents")
+    # parser.add_argument("--N", type=int, default=3, help=" number of agents")
 
     parser.add_argument("--max_train_steps", type=int, default=int(1e6), help=" Maximum number of training steps")
     parser.add_argument("--episode_limit", type=int, default=25, help="Maximum number of steps per episode")
@@ -39,22 +41,18 @@ if __name__ == '__main__':
     parser.add_argument("--noise_clip", type=float, default=0.5, help="Clip noise")
     parser.add_argument("--policy_update_freq", type=int, default=2, help="The frequency of policy updates")
 
-
-
-
-
     args = parser.parse_args()
     agent_num = 3
-    args.obs_dim_n = [35 for i in range(args.N)]
-    args.action_dim_n = [2 for i in range(args.N)]
+    args.N = agent_num
+    args.obs_dim_n = [env.state_dim for i in range(args.N)]
+    args.action_dim_n = [env.action_dim for i in range(args.N)]
     args.noise_std_decay = (args.noise_std_init - args.noise_std_min) / args.noise_decay_steps
-    env = RobotMotionEnv("UAV-0", False, agent_num=agent_num, args=args)
 
     agents = []
     for i in range(agent_num):
         agents.append(MADDPG(args, i))
     ctrl = agents
-    # env.after_mainloop(display=False, mode="train", episode=5000, predict=1000, ctrl=ctrl)
-    env.after_mainloop(display=True, mode="test", episode=5000, predict=1000, ctrl=ctrl)
+    env.after_mainloop(display=False, mode="train", episode=2000, predict=1000, ctrl=ctrl, args=args)
+    # env.after_mainloop(display=True, mode="test", episode=5000, predict=1000, ctrl=ctrl, args=args)
     # print("quit program!")
 

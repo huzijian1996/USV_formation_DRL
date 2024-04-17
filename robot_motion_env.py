@@ -39,7 +39,7 @@ DELTA = 0.01
 
 """目标运动控制环境"""
 class RobotMotionEnv(object):
-    def __init__(self, envname="USV",discrete_action=True,agent_num = 3, args=None):
+    def __init__(self, envname="USV",discrete_action=True):
         #初始化信息
         # 定义初始化参数
         self._world_width = 1000.0
@@ -65,13 +65,11 @@ class RobotMotionEnv(object):
         self._discrete_action = discrete_action
         self.action_dim = 2
         self.state_dim = self._sensor_num_rays + 3  # 传感器的16个测量值+d_x+d_y+d_theta
-        self.actions_num = agent_num
+
         self._locator = None
         self.ctrl = []
 
-        self.args=args
-        self.replay_buffer=ReplayBuffer(self.args)
-        self.noise_std = self.args.noise_std_init
+
 
         # 是否结束标志
         self._all_hit_target = False  # 命中
@@ -94,8 +92,7 @@ class RobotMotionEnv(object):
         self._max_predict = 100
         self._all_iter = 0
         self.hit_probability = []  #成功命中目标的概率_num_targets/_max_episode
-        self.rewards = []          #存放每个回合的所有收益
-        self.average_rewards = []  #每个回合平均收益
+
         self.is_hit_target = deque(maxlen=100) #用来记录是否命中目标 命中则为1否则则为0
         self.hit_rate = []
 
@@ -236,7 +233,6 @@ class RobotMotionEnv(object):
         self._timeout = False
         self._predict_iter = 0
 
-        del self.rewards[:]
 
         if self._random_pos:  #随机产生位置
             for i in range(self.robot_num):
@@ -506,50 +502,61 @@ class RobotMotionEnv(object):
     #结果输出
     def plot_out(self):
         #控制器画图
-        if (self.ctrl is not None) and (len(self.ctrl.cost_his)) > 0:
-            fig0 = plt.figure("train cost")
-            plt.plot(np.arange(len(self.ctrl.cost_his)), self.ctrl.cost_his)
-            plt.ylabel('Cost')
-            plt.xlabel('training steps')
-            fig0.show()
-        #收益绘图
-        fig1 = plt.figure("average rewards")
-        plt.plot(np.arange(len(self.average_rewards)), self.average_rewards)
-        plt.ylabel('Average Rewards')
-        plt.xlabel('episodes')
-        fig1.show()
+        # if (self.ctrl is not None) and (len(self.ctrl.cost_his)) > 0:
+        #     fig0 = plt.figure("train cost")
+        #     plt.plot(np.arange(len(self.ctrl.cost_his)), self.ctrl.cost_his)
+        #     plt.ylabel('Cost')
+        #     plt.xlabel('training steps')
+        #     fig0.show()
 
-        #命中概率绘图
-        fig2 = plt.figure("hit probability")
-        plt.plot(np.arange(len(self.hit_probability)), self.hit_probability)
-        plt.ylabel('Hit Probability')
-        plt.xlabel('episodes')
-        fig2.show()
 
-        fig3 = plt.figure("hit rate")
+        fig_hr = plt.figure("Hit Rate")
         plt.plot(np.arange(len(self.hit_rate)), self.hit_rate)
         plt.ylabel('Hit Rate')
-        plt.xlabel('episodes')
-        fig3.show()
+        plt.xlabel('Episodes')
+        fig_hr.savefig('./MADDPG/pic/Hit Rate_maddpg.png')
+
+        for i in range(self.robot_num):
+            plt.clf()
+            fig = plt.figure("Average Reward")
+            plt.plot(np.arange(len(self.robots[i].episode_average_reward)), self.robots[i].episode_average_reward)
+            plt.ylabel('Episode Average Reward')
+            plt.xlabel('Episodes')
+            fig.savefig(f'./MADDPG/pic/average_reward_maddpg_{i}.png')
+        for i in range(self.robot_num):
+            plt.clf()
+            fig = plt.figure("Actor Loss")
+            plt.plot(np.arange(len(self.ctrl[i].a_loss)), self.ctrl[i].a_loss)
+            plt.ylabel('Actor Loss')
+            plt.xlabel('Tarining Steps')
+            fig.savefig(f'./MADDPG/pic/Actor Loss_maddpg_{i}.png')
+        for i in range(self.robot_num):
+            plt.clf()
+            fig = plt.figure("Critic Loss")
+            plt.plot(np.arange(len(self.ctrl[i].c_loss)), self.ctrl[i].c_loss)
+            plt.ylabel('Critic Loss')
+            plt.xlabel('Tarining Steps')
+            fig.savefig(f'./MADDPG/pic/Critic Loss_maddpg_{i}.png')
+
 
     def save_data(self):
         m = np.array(self.hit_rate)
-        r = np.array(self.average_rewards)
+
         #保存命中率
-
-        if self.RBO:
-            np.save('hit_rate_dqn_rbo.npy',m)
-        else:
-            np.save('hit_rate_dqn',m)
+        np.save('./MADDPG/data/hit_rate_maddpg_all',m)
         #保存回合平均奖励值
-        if self.RBO:
-            np.save('reward_hit_rate_dqn_rbo.npy', r)
-        else:
-            np.save('reward_hit_rate_dqn', r)
+        for i in range(self.robot_num):
+            r = np.array(self.robots[i].episode_average_reward)
+            np.save(f'./MADDPG/data/average_reward_maddpg_{i}', r)
 
 
-    def after_mainloop(self, display=True, mode="learn",episode=100,predict=1000, ctrl=None,timer=120,callback=None):
+
+    def after_mainloop(self, display=True, mode="learn",episode=100,predict=1000, ctrl=None,timer=120,callback=None,args=None):
         #窗体显示与否
+        self.args = args
+        self.actions_num = args.N
+        self.replay_buffer=ReplayBuffer(self.args)
+        self.noise_std = self.args.noise_std_init
         self._display = display
         if display:
             widget = QtGui.QWidget()
@@ -605,8 +612,9 @@ class RobotMotionEnv(object):
         #一个回合结束
         elif self._terminal:
             self._episode_iter += 1
-            self.hit_probability.append(float(self._num_targets)/float(self._max_episode))
-            # self.average_rewards.append(sum(self.rewards)/len(self.rewards))
+            for i in range(self.robot_num):
+                ave_r = sum(self.robots[i].episode_step_reward)/len(self.robots[i].episode_step_reward)
+                self.robots[i].episode_average_reward.append(ave_r)
 
             print('episode',self._episode_iter,'step', self._predict_iter,'number of crashes',self._num_crashes,'number of targets',self._num_targets)
 
@@ -617,14 +625,18 @@ class RobotMotionEnv(object):
 
             self.observation = self.reset()
             self.observation_ = self.reset()
-            if self._episode_iter >= 100:
+
+
+
+
+            if self._episode_iter >= 1:
                 count = 0.0
                 for i in range(len(self.is_hit_target)):
-                    if self.is_hit_target[i]==1:
-                        count+=1
-                count/=100
+                    if self.is_hit_target[i] == 1:
+                        count += 1
+                count /= 500
                 self.hit_rate.append(count)
-                print('hit_rate',count)
+                print('hit_rate', count)
         #——————————————————————————————MADDPG————————————————————————————————
         else:
             #计数增加
@@ -648,6 +660,8 @@ class RobotMotionEnv(object):
                 else:
                     all_done.append(0)
                 self.observation_[i] = observation_.copy()
+                self.robots[i].episode_step_reward.append(reward)
+
 
 
             self.replay_buffer.store_transition(self.observation,all_action,all_reward,self.observation_,all_done)
@@ -683,8 +697,7 @@ class RobotMotionEnv(object):
         #一个回合结束
         elif self._terminal:
             self._episode_iter += 1
-            self.hit_probability.append(float(self._num_targets) / float(self._max_episode))
-            # self.average_rewards.append(sum(self.rewards) / len(self.rewards))
+            self.hit_probability.append(float(self._num_targets)/float(self._max_episode))
             print(self._episode_iter, self._predict_iter, self._num_crashes, self._num_targets, self.hit_probability[-1])
 
             self.observation = self.reset()
