@@ -23,10 +23,10 @@ class Robot(object):
 
         #固定翼飞机A10
         if robot_name == "USV":
-            model = "USV1.obj"
+            model = "./obj/USV1.obj"
 
         else:  #此处留待以后增加其他模型
-            model = "USV1.obj"
+            model = "./obj/USV1.obj"
 
         #显示转换
         t = vtk.vtkTransform()

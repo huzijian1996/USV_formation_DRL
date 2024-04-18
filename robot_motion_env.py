@@ -97,6 +97,7 @@ class RobotMotionEnv(object):
         self.is_hit_target = deque(maxlen=100) #用来记录是否命中目标 命中则为1否则则为0
         self.hit_rate = []
 
+        self.islands = []
         self.formation_dis = 20
         self.robot_num = 3
         self.robots = []
@@ -122,7 +123,10 @@ class RobotMotionEnv(object):
         self._target = Obstacle(self._target_init_state[0], self._target_init_state[1], self._target_init_state[2], self._target_init_velocity, 20, self._world_bounds, 2, color=[0, 0.8, 0])
 
         #island对象
-        self._island = Island([self._world.obstacles[1].state[0],self._world.obstacles[1].state[1],self._world.obstacles[1].state[2]])
+
+        for i in range(len(self._world.obstacles)):
+            island = Island(ID=i, state=[self._world.obstacles[i].state[0],self._world.obstacles[i].state[1],0])
+            self.islands.append(island)
         self._sea = Sea([0,0,0])
         #目标绑定target
         self.update_robot_target()
@@ -177,12 +181,6 @@ class RobotMotionEnv(object):
     def robot_step(self, i, action):
         self._hit_target = False
         self._collided = False
-        #解析action
-
-        # if self._discrete_action:
-        #     action = self.actions[action]
-        # else:
-        #     action = np.clip(action, *self.action_bound)[0]
 
 
         #对象推进
@@ -440,10 +438,18 @@ class RobotMotionEnv(object):
         return frame
 
     #动目标坐标转换
+    def _update_moving_object_island(self, moving_object_state, frame):
+        t = vtk.vtkTransform()
+        t.Translate(moving_object_state[0], moving_object_state[1], moving_object_state[2])#参数为中心点位置
+        t.RotateX(np.degrees(np.pi/2))
+        frame.getChildFrame().copyFrame(t)
+
+
     def _update_moving_object_sea(self, moving_object_state, frame):
         t = vtk.vtkTransform()
         t.Translate(moving_object_state[0], moving_object_state[1], -7)#参数为中心点位置
         t.RotateX(np.degrees(np.pi/2))
+        # t.RotateY(np.degrees(np.pi / 2))
         frame.getChildFrame().copyFrame(t)
 
     def _update_moving_object_obs(self, moving_object_state, frame):
@@ -491,14 +497,20 @@ class RobotMotionEnv(object):
         # 绑定obstacles
         for i, obs in enumerate(self._world.obstacles):
             frame_name = "obstacle{}".format(i+1)
-            frame_obstacle = self._add_polydata(obs.to_polydata(), frame_name, [1.0, 1.0, 1.0], alpha = 1)
+            frame_obstacle = self._add_polydata(obs.to_polydata(), frame_name, [1.0, 1.0, 1.0], alpha = 0.)
             self._update_moving_object_obs(obs.state, frame_obstacle)
             self._frame_obstacles.append(frame_obstacle)
 
-        self._frame_islands = self._add_polydata(self._island.to_polydata(), "island", [0.45, 0.29, 0.07], 1)
-        self._update_moving_object_obs(self._island.state, self._frame_islands)
 
-        self._frame_sea = self._add_polydata(self._sea.to_polydata(), "sea", [0.156, 0.586, 0.78], 1)
+        for i,island in enumerate(self.islands):
+            frame_name = "islands{}".format(i + 1)
+            frame_island = self._add_polydata(island.to_polydata(), frame_name, [0.45, 0.29, 0.07], 1)
+            self._update_moving_object_island(island.state, frame_island)
+        #
+        # self._frame_islands = self._add_polydata(self._island.to_polydata(), "island", [0.45, 0.29, 0.07], 1)
+        # self._update_moving_object_island(self._island.state, self._frame_islands)
+
+        self._frame_sea = self._add_polydata(self._sea.to_polydata(), "sea", [0.156, 0.586, 0.78], 0.5)
         self._update_moving_object_sea(self._sea.state, self._frame_sea)
 
 
