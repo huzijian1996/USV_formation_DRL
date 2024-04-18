@@ -53,7 +53,7 @@ if __name__ == '__main__':
     for i in range(agent_num):
         agents.append(MADDPG(args, i))
     ctrl = agents
-    env.after_mainloop(display=False, mode="train", episode=3000, predict=1000, ctrl=ctrl, args=args)
-    # env.after_mainloop(display=True, mode="test", episode=5000, predict=1000, ctrl=ctrl, args=args)
+    # env.after_mainloop(display=False, mode="train", episode=3000, predict=1000, ctrl=ctrl, args=args)
+    env.after_mainloop(display=True, mode="test", episode=5000, predict=1000, ctrl=ctrl, args=args)
     # print("quit program!")
 

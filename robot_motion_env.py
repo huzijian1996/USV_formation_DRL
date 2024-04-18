@@ -5,6 +5,7 @@
 import sys
 import numpy as np
 import math
+from island import Island, Sea
 from world import World
 from world import Obstacle
 from robot import Robot
@@ -120,6 +121,9 @@ class RobotMotionEnv(object):
         #target对象(用一个不同颜色的障碍物代替)
         self._target = Obstacle(self._target_init_state[0], self._target_init_state[1], self._target_init_state[2], self._target_init_velocity, 20, self._world_bounds, 2, color=[0, 0.8, 0])
 
+        #island对象
+        self._island = Island([self._world.obstacles[1].state[0],self._world.obstacles[1].state[1],self._world.obstacles[1].state[2]])
+        self._sea = Sea([0,0,0])
         #目标绑定target
         self.update_robot_target()
 
@@ -144,6 +148,7 @@ class RobotMotionEnv(object):
         self._frame_target = None
         self._frame_robot = []
         self._frame_obstacles = []
+        self._frame_islands = []
         self.create_view()
 
     #单步推进
@@ -348,6 +353,8 @@ class RobotMotionEnv(object):
             return -10
         elif self._hit_target:
             return 5
+        elif new_distance <= 50:
+            return 2*(1-new_distance/50)
         else:
             delta_distance = prev_distance - new_distance  # 敌我距离增量
             angle_distance = -abs(self._angle_to_destination(new_ralative_pos[0],new_ralative_pos[1],i)) / 4   # 角度偏移量 <0
@@ -425,14 +432,20 @@ class RobotMotionEnv(object):
         self._locator.BuildLocator()
 
     #画图专用
-    def _add_polydata(self, polydata, frame_name, color):
+    def _add_polydata(self, polydata, frame_name, color, alpha):
         om.removeFromObjectModel(om.findObjectByName(frame_name))
-        frame = vis.showPolyData(polydata, frame_name, color=color)
+        frame = vis.showPolyData(polydata, frame_name, color=color, alpha=alpha)
 
         vis.addChildFrame(frame)
         return frame
 
     #动目标坐标转换
+    def _update_moving_object_sea(self, moving_object_state, frame):
+        t = vtk.vtkTransform()
+        t.Translate(moving_object_state[0], moving_object_state[1], -7)#参数为中心点位置
+        t.RotateX(np.degrees(np.pi/2))
+        frame.getChildFrame().copyFrame(t)
+
     def _update_moving_object_obs(self, moving_object_state, frame):
         t = vtk.vtkTransform()
         t.Translate(moving_object_state[0], moving_object_state[1], 0.0)
@@ -462,25 +475,32 @@ class RobotMotionEnv(object):
         om.removeFromObjectModel(om.findObjectByName("world"))
         vis.showPolyData(self._world.to_polydata(), "world")
         # 绑定目标
-        self._frame_target = self._add_polydata(self._target.to_polydata(), "target", [0, 0.8, 0])
+        self._frame_target = self._add_polydata(self._target.to_polydata(), "target", [0, 0.8, 0], 1)
         self._update_moving_object_obs(self._target.state, self._frame_target)
         # 绑定robot
 
         for i,robot in enumerate(self.robots):
             frame_name = "robot{}".format(i + 1)
             if i == 0:
-                frame_robot =  self._add_polydata(robot.to_polydata(), frame_name, [0.8, 0.2, 0.6])
+                frame_robot =  self._add_polydata(robot.to_polydata(), frame_name, [0.8, 0.2, 0.6], 1)
             else:
-                frame_robot =  self._add_polydata(robot.to_polydata(), frame_name, [0.4, 0.2, 0.9])
+                frame_robot =  self._add_polydata(robot.to_polydata(), frame_name, [0.4, 0.2, 0.9], 1)
 
             self._update_moving_object_robot(robot.state, frame_robot)
             self._frame_robot.append(frame_robot)
         # 绑定obstacles
         for i, obs in enumerate(self._world.obstacles):
             frame_name = "obstacle{}".format(i+1)
-            frame_obstacle = self._add_polydata(obs.to_polydata(), frame_name, [1.0, 1.0, 1.0])
+            frame_obstacle = self._add_polydata(obs.to_polydata(), frame_name, [1.0, 1.0, 1.0], alpha = 1)
             self._update_moving_object_obs(obs.state, frame_obstacle)
             self._frame_obstacles.append(frame_obstacle)
+
+        self._frame_islands = self._add_polydata(self._island.to_polydata(), "island", [0.45, 0.29, 0.07], 1)
+        self._update_moving_object_obs(self._island.state, self._frame_islands)
+
+        self._frame_sea = self._add_polydata(self._sea.to_polydata(), "sea", [0.156, 0.586, 0.78], 1)
+        self._update_moving_object_sea(self._sea.state, self._frame_sea)
+
 
     #更新视图
     def update_view(self):
@@ -635,7 +655,7 @@ class RobotMotionEnv(object):
                 for i in range(len(self.is_hit_target)):
                     if self.is_hit_target[i] == 1:
                         count += 1
-                count /= 200
+                count /= 100
                 self.hit_rate.append(count)
                 print('hit_rate', count)
         #——————————————————————————————MADDPG————————————————————————————————

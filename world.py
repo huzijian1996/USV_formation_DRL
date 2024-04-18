@@ -77,6 +77,8 @@ class World(object):
         for start, end in zip(corners, corners[1:]):
             self._data.addLine(start, end, radius=1)
 
+
+
     # 生成障碍物（按照比例随机生成）
     def generate_obstacles(self, random_obstacle=True, density=0.05, moving_obstacle_ratio=0.20):
         bounds = self._x_min, self._x_max, self._y_min, self._y_max

@@ -83,7 +83,7 @@ class MADDPG(object):
         torch.save(self.actor, f"./MADDPG/model/maddpg{agent_id}.pth")
 
     def load_model(self, agent_id):
-        return torch.load(f"./MADDPG/model/maddpg80_{agent_id}.pth")
+        return torch.load(f"./MADDPG/model/maddpg90_{agent_id}.pth")
 
 
     # def save_model(self, env_name, algorithm, number, total_steps, agent_id):
